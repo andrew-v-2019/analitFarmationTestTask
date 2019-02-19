@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28010.2048
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFTestApp.Data", "AFTestApp.Data\AFTestApp.Data.csproj", "{494DEF0E-5CB4-4767-8027-75A44EA5698B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFTestApp.DataBasePopulator", "AFTestApp.DataBasePopulator\AFTestApp.DataBasePopulator.csproj", "{90D82760-9C81-4939-A5FD-671D54829856}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFTestApp.Services", "AFTestApp.Services\AFTestApp.Services.csproj", "{6254CBAB-B355-4077-94F5-96D40E12DCDE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFTestApp.ViewModels", "AFTestApp.ViewModels\AFTestApp.ViewModels.csproj", "{E474E637-C9FD-4F30-A7E5-9F4951454B47}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFTestApp.Configs", "AFTestApp.Configs\AFTestApp.Configs.csproj", "{6A9B6391-1988-43F4-B5E1-E7F5EF4DA6A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFTestApp.Wpf", "AFTestApp.Wpf\AFTestApp.Wpf.csproj", "{0AED5925-B0F8-4BA8-ACBE-1471CEECD533}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		{494DEF0E-5CB4-4767-8027-75A44EA5698B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{494DEF0E-5CB4-4767-8027-75A44EA5698B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{494DEF0E-5CB4-4767-8027-75A44EA5698B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{90D82760-9C81-4939-A5FD-671D54829856}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90D82760-9C81-4939-A5FD-671D54829856}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90D82760-9C81-4939-A5FD-671D54829856}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90D82760-9C81-4939-A5FD-671D54829856}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6254CBAB-B355-4077-94F5-96D40E12DCDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6254CBAB-B355-4077-94F5-96D40E12DCDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6254CBAB-B355-4077-94F5-96D40E12DCDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{6A9B6391-1988-43F4-B5E1-E7F5EF4DA6A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A9B6391-1988-43F4-B5E1-E7F5EF4DA6A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A9B6391-1988-43F4-B5E1-E7F5EF4DA6A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AED5925-B0F8-4BA8-ACBE-1471CEECD533}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AED5925-B0F8-4BA8-ACBE-1471CEECD533}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AED5925-B0F8-4BA8-ACBE-1471CEECD533}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AED5925-B0F8-4BA8-ACBE-1471CEECD533}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

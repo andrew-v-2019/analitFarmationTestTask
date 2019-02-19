@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using AFTestApp.Data;
 using AFTestApp.ViewModels;
+using AFTestApp.Services.Interfaces;
 
 namespace AFTestApp.Services.Services
 {
-    public class ProductService
+    public class ProductService: IProductService
     {
         private readonly IAfTestAppContextFactory _afTestAppContextFactory;
 
