@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AFTestTaskData")]
+[assembly: AssemblyTitle("AFTestApp.Services")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AFTestTaskData")]
+[assembly: AssemblyProduct("AFTestApp.Services")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("44d586a4-ec0b-4206-abaa-16b2f79decc1")]
+[assembly: Guid("6254cbab-b355-4077-94f5-96d40e12dcde")]
 
 // Version information for an assembly consists of the following four values:
 //
