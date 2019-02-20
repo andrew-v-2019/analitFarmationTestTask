@@ -16,7 +16,8 @@ namespace AFTestApp.Data
                 var productEntity = new Product
                 {
                     Name = product,
-                    Code = i.ToString()
+                    Code = i.ToString(),
+                    Price = i * 10
                 };
                 context.Products.Add(productEntity);
                 i++;

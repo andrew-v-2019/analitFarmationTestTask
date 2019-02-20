@@ -1,11 +1,8 @@
-﻿using System;
-using AFTestApp.Services.Interfaces;
+﻿using AFTestApp.Services.Interfaces;
 using AFTestApp.Services.Services.Unity;
-using AFTestApp.ViewModels;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using AFTestApp.Wpf.Models;
 
 namespace AFTestApp.Wpf
 {
@@ -13,36 +10,27 @@ namespace AFTestApp.Wpf
     {
         private IProductService _productService;
         private IDocumentService _documentService;
-        public List<ProductViewModel> Products { get; set; }
-        public ProductViewModel CurrentProduct { get; set; }
-        public DocumentViewModel CurrentDocument { get; set; }
+        public EditDocumentModel ViewModel { get; set; }
 
 
         public MainWindow()
         {
-            Products = new List<ProductViewModel>();
             InitializeComponent();
             InjectServices();
-            DataContext = this;
-            RefreshProducts();
-            CreateNewDocument();
+
+            var newDocument = _documentService.GetNewDocument();
+
+            var productsDto = _productService.GetProducts();
+            ViewModel = new EditDocumentModel(productsDto, newDocument);
+            DataContext = ViewModel;
             SetAddProductButtonStatus();
         }
 
 
-        private void CreateNewDocument()
-        {
-            CurrentDocument= _documentService.GetNewDocument();
-        }
-
-        private void RefreshProducts()
-        {
-            Products = _productService.GetProducts();
-        }
-
         private void SetAddProductButtonStatus()
         {
-            if (CurrentProduct == null || ProductsCountTextBox.Text.Trim() == string.Empty)
+            var isNum = int.TryParse(ProductsCountTextBox.Text, out var num);
+            if (ViewModel.SelectedProduct == null || ViewModel.SelectedProduct.Count <= 0 || !isNum || num <= 0)
             {
                 AddProductButton.IsEnabled = false;
             }
@@ -59,16 +47,20 @@ namespace AFTestApp.Wpf
             _documentService = ServiceInjector.Retrieve<IDocumentService>();
         }
 
-        private void ProductsCountTextBox_FormatText(object sender, RoutedEventArgs e)
+        private void ProductsCountTextBox_TextChanged(object sender, RoutedEventArgs e)
         {
-            ProductsCountTextBox.FormatTextBoxForOnlyDigits();
+            //ProductsCountTextBox.FormatTextBoxForOnlyDigits();
             SetAddProductButtonStatus();
         }
 
         private void ProductComboBox_SelectedChanged(object sender, SelectionChangedEventArgs e)
         {
-            CurrentProduct.Count = 1;
             SetAddProductButtonStatus();
+        }
+
+        private void AddProductButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.AddSelectedProduct();
         }
     }
 }

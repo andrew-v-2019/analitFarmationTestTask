@@ -10,14 +10,52 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition ></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
+            <DataGrid Grid.Row="0" ItemsSource="{Binding SelectedProducts}" SelectedValue="{Binding ViewProduct, Mode=TwoWay}"  CanUserAddRows="False" 
+                      CanUserResizeColumns="False" 
+                      CanUserDeleteRows="False" 
+                      CanUserResizeRows="False"  
+                      AutoGenerateColumns="False" IsReadOnly="True"  Background="#dbdbdb" Foreground="#FF0E0005" VerticalAlignment="Top" HorizontalAlignment="Center" BorderBrush="#FFF9F9F9">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="2*" FontWeight="Bold" Header="Наименование" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Width="1*" Header="Количество" Binding="{Binding Count}"/>
+                    <DataGridTextColumn Width="1*" Header="Сумма" Binding="{Binding Sum, StringFormat=F2}"/>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
-        <Grid Grid.Row="1" Background="#2d6ac6">
+        <Grid Grid.Row="1" Height="Auto" Background="#2d6ac6">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0" Grid.Column="0" Margin="10 10 10 10" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Foreground="#FFFBFAFA" Text="Код: " FontSize="18"/>
+                <TextBlock Foreground="#FFFBFAFA" Text="{Binding Path=ViewProduct.Code}"  FontSize="18"/>
+            </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="1" Margin="10 10 10 10" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Foreground="#FFFBFAFA" Text="Цена: " FontSize="18"/>
+                <TextBlock Foreground="#FFFBFAFA" Text="{Binding Path=ViewProduct.Price}" FontSize="18"/>
+            </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="2" Margin="10 10 10 10" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Foreground="#FFFBFAFA" Text="Количество: " FontSize="18"/>
+                <TextBlock Foreground="#FFFBFAFA" Text="{Binding Path=ViewProduct.Count}" FontSize="18"/>
+            </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="3" Margin="10 10 10 10" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Foreground="#FFFBFAFA" Text="Сумма: " FontSize="18"/>
+                <TextBlock Foreground="#FFFBFAFA" Text="{Binding Path=ViewProduct.Sum}" FontSize="18"/>
+            </StackPanel>
+            <TextBlock Grid.ColumnSpan="4" Text="{Binding Path=ViewProduct.Name}" Margin="10 0 0 0"  Grid.Row="1" Grid.Column="0" Foreground="#FFFBFAFA" FontSize="36"/>
         </Grid>
         <Grid Grid.Row="2" Height="Auto" Margin="20 0 20 10">
             <Grid.RowDefinitions>
@@ -31,16 +69,16 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Margin="5 5 5 5" Grid.Column="0">Выберите наименование:</TextBlock>
             <ComboBox ItemsSource="{Binding Products}"
-                      SelectedItem="{Binding CurrentProduct}"
+                      SelectedItem="{Binding SelectedProduct}"
                       DisplayMemberPath="Name"
                       SelectionChanged="ProductComboBox_SelectedChanged"
                       SelectedValuePath="ProductId" Margin="5 5 5 5" x:Name="ProductComboBox" Grid.Row="1" Grid.Column="0">
-                
+
             </ComboBox>
             <TextBlock Grid.Row="0" Margin="5 5 5 5" Grid.Column="1">Укажите количество:</TextBlock>
-            <TextBox Name="ProductsCountTextBox" Text="{Binding Path=CurrentProduct.Count, Mode=TwoWay}" TextChanged="ProductsCountTextBox_FormatText" Margin="5 5 5 5" Grid.Row="1" Grid.Column="1"></TextBox>
+            <TextBox Name="ProductsCountTextBox" Text="{Binding Path=SelectedProduct.Count, Mode=TwoWay}" TextChanged="ProductsCountTextBox_TextChanged" Margin="5 5 5 5" Grid.Row="1" Grid.Column="1"></TextBox>
             <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Name="AddProductButton" Margin="5 5 5 5">
+                <Button Name="AddProductButton" Click="AddProductButton_OnClick" Margin="5 5 5 5">
                     <TextBlock  Margin="2 2 2 2">Добавить товар</TextBlock>
                 </Button>
                 <Button  Margin="5 5 5 5">
