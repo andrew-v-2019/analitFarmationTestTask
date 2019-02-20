@@ -92,8 +92,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\EditDocumentModel.cs" />
-    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\DocumentViewModel.cs" />
+    <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -142,9 +142,9 @@
       <Project>{6254CBAB-B355-4077-94F5-96D40E12DCDE}</Project>
       <Name>AFTestApp.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AFTestApp.ViewModels\AFTestApp.ViewModels.csproj">
+    <ProjectReference Include="..\AFTestApp.ViewModels\AFTestApp.DtoModels.csproj">
       <Project>{E474E637-C9FD-4F30-A7E5-9F4951454B47}</Project>
-      <Name>AFTestApp.ViewModels</Name>
+      <Name>AFTestApp.DtoModels</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

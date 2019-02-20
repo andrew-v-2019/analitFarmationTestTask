@@ -3,6 +3,7 @@ using AFTestApp.Services.Services.Unity;
 using System.Windows;
 using System.Windows.Controls;
 using AFTestApp.Wpf.Models;
+using System;
 
 namespace AFTestApp.Wpf
 {
@@ -10,18 +11,16 @@ namespace AFTestApp.Wpf
     {
         private IProductService _productService;
         private IDocumentService _documentService;
-        public EditDocumentModel ViewModel { get; set; }
+        public DocumentViewModel ViewModel { get; set; }
 
 
         public MainWindow()
         {
             InitializeComponent();
             InjectServices();
-
             var newDocument = _documentService.GetNewDocument();
-
             var productsDto = _productService.GetProducts();
-            ViewModel = new EditDocumentModel(productsDto, newDocument);
+            ViewModel = new DocumentViewModel(productsDto, newDocument);
             DataContext = ViewModel;
             SetAddProductButtonStatus();
         }
@@ -30,7 +29,7 @@ namespace AFTestApp.Wpf
         private void SetAddProductButtonStatus()
         {
             var isNum = int.TryParse(ProductsCountTextBox.Text, out var num);
-            if (ViewModel.SelectedProduct == null || ViewModel.SelectedProduct.Count <= 0 || !isNum || num <= 0)
+            if (ViewModel.NewProductId == default(int) || ViewModel.NewProductCount <= 0 || !isNum || num <= 0)
             {
                 AddProductButton.IsEnabled = false;
             }
@@ -49,7 +48,6 @@ namespace AFTestApp.Wpf
 
         private void ProductsCountTextBox_TextChanged(object sender, RoutedEventArgs e)
         {
-            //ProductsCountTextBox.FormatTextBoxForOnlyDigits();
             SetAddProductButtonStatus();
         }
 
@@ -61,6 +59,20 @@ namespace AFTestApp.Wpf
         private void AddProductButton_OnClick(object sender, RoutedEventArgs e)
         {
             ViewModel.AddSelectedProduct();
+        }
+
+        private void SubmitButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var dto = ViewModel.ToDto();
+                _documentService.SubmitDocument(dto);
+                MessageBox.Show($"Документ {dto.DocumentNumber} сохранён", "Успешно", 0, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"В ходе сохранения произошли ошибки", "Ошибка", 0, MessageBoxImage.Error);
+            }
         }
     }
 }

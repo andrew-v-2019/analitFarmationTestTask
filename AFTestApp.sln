@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFTestApp.Data", "AFTestApp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFTestApp.Services", "AFTestApp.Services\AFTestApp.Services.csproj", "{6254CBAB-B355-4077-94F5-96D40E12DCDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFTestApp.ViewModels", "AFTestApp.ViewModels\AFTestApp.ViewModels.csproj", "{E474E637-C9FD-4F30-A7E5-9F4951454B47}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFTestApp.DtoModels", "AFTestApp.ViewModels\AFTestApp.DtoModels.csproj", "{E474E637-C9FD-4F30-A7E5-9F4951454B47}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFTestApp.Configs", "AFTestApp.Configs\AFTestApp.Configs.csproj", "{6A9B6391-1988-43F4-B5E1-E7F5EF4DA6A5}"
 EndProject

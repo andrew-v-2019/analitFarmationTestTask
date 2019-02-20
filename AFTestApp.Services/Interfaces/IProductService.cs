@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using AFTestApp.ViewModels;
+using AFTestApp.DtoModels;
 
 namespace AFTestApp.Services.Interfaces
 {
     public interface IProductService
     {
-        List<ProductViewModel> GetProducts();
+        List<ProductDto> GetProducts();
     }
 }

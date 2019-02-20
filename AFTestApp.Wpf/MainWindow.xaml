@@ -53,7 +53,7 @@
             </StackPanel>
             <StackPanel Grid.Row="0" Grid.Column="3" Margin="10 10 10 10" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Foreground="#FFFBFAFA" Text="Сумма: " FontSize="18"/>
-                <TextBlock Foreground="#FFFBFAFA" Text="{Binding Path=ViewProduct.Sum}" FontSize="18"/>
+                <TextBlock Foreground="#FFFBFAFA" Text="{Binding Path=ViewProduct.Sum, StringFormat=F2}" FontSize="18"/>
             </StackPanel>
             <TextBlock Grid.ColumnSpan="4" Text="{Binding Path=ViewProduct.Name}" Margin="10 0 0 0"  Grid.Row="1" Grid.Column="0" Foreground="#FFFBFAFA" FontSize="36"/>
         </Grid>
@@ -69,28 +69,55 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Margin="5 5 5 5" Grid.Column="0">Выберите наименование:</TextBlock>
             <ComboBox ItemsSource="{Binding Products}"
-                      SelectedItem="{Binding SelectedProduct}"
+                      SelectedValue ="{Binding NewProductId}"
                       DisplayMemberPath="Name"
                       SelectionChanged="ProductComboBox_SelectedChanged"
                       SelectedValuePath="ProductId" Margin="5 5 5 5" x:Name="ProductComboBox" Grid.Row="1" Grid.Column="0">
 
             </ComboBox>
             <TextBlock Grid.Row="0" Margin="5 5 5 5" Grid.Column="1">Укажите количество:</TextBlock>
-            <TextBox Name="ProductsCountTextBox" Text="{Binding Path=SelectedProduct.Count, Mode=TwoWay}" TextChanged="ProductsCountTextBox_TextChanged" Margin="5 5 5 5" Grid.Row="1" Grid.Column="1"></TextBox>
+            <TextBox Name="ProductsCountTextBox" Text="{Binding Path=NewProductCount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" TextChanged="ProductsCountTextBox_TextChanged" Margin="5 5 5 5" Grid.Row="1" Grid.Column="1"></TextBox>
             <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Name="AddProductButton" Click="AddProductButton_OnClick" Margin="5 5 5 5">
                     <TextBlock  Margin="2 2 2 2">Добавить товар</TextBlock>
                 </Button>
-                <Button  Margin="5 5 5 5">
+                <Button Name="SubmitButton" Click="SubmitButton_Click" Margin="5 5 5 5">
                     <TextBlock Margin="2 2 2 2">Закрыть документ</TextBlock>
                 </Button>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="3" Background="#2d6ac6">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="207*"/>
-                <ColumnDefinition Width="364*"/>
-            </Grid.ColumnDefinitions>
+            <DockPanel LastChildFill="True">
+                <Grid Margin="5 5 5 5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock  HorizontalAlignment="Right" Text ="Вид документа: " Grid.Row="0" Grid.Column="0" Foreground="#FFFBF9F9" VerticalAlignment="Center" FontSize="14"/>
+                    <TextBlock  Text="{Binding Path=DocumentType}" Grid.Column="1" Grid.Row="0" Foreground="#FFFDF7F7" FontSize="16" VerticalAlignment="Center"/>
+                    <TextBlock  HorizontalAlignment="Right" Text ="№ документа: " Grid.Row="1" Grid.Column="0" Foreground="#FFFBF6F6" VerticalAlignment="Center" FontSize="14"/>
+                    <TextBlock  Text="{Binding Path=DocumentNumber}" Grid.Row="1" Grid.Column="1" Foreground="#FFFDF6F6" FontSize="16" VerticalAlignment="Center"/>
+                    <TextBlock  HorizontalAlignment="Right" Text ="Позиции: " Grid.Row="2" Grid.Column="0" Foreground="#FFF9F5F5" VerticalAlignment="Center" FontSize="14"/>
+                    <TextBlock  Text="{Binding Path=ItemsCount}"  Grid.Row="2" Grid.Column="1" Foreground="#FFFBF9F9" FontSize="16" VerticalAlignment="Center"/>
+                </Grid>
+
+                <Grid Margin="5 5 5 5" Width="Auto" HorizontalAlignment="Right">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock  HorizontalAlignment="Left" Text ="Сумма документа: " Grid.Row="0" Grid.Column="0" Foreground="#FFFBF9F9" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
+                    <TextBlock  HorizontalAlignment="Right" Text ="{Binding Path=DocumentSum, StringFormat=F2}" Grid.Row="1" Grid.Column="0" Foreground="#FFFBF9F9" VerticalAlignment="Center" FontSize="36"/>
+                </Grid>
+            </DockPanel>
         </Grid>
         <StatusBar Grid.Row="4" Background="#008ed5" Foreground="#FFFBFAFA">
             <StatusBar.ItemsPanel>

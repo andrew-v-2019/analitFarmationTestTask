@@ -3,12 +3,12 @@ using System.Linq;
 using AFTestApp.Data;
 using AFTestApp.Data.Entities;
 using AFTestApp.Services.Interfaces;
-using AFTestApp.ViewModels;
 using AFTestApp.ViewModels.Enums;
+using AFTestApp.DtoModels;
 
 namespace AFTestApp.Services.Services
 {
-    public class DocumentService: IDocumentService
+    public class DocumentService : IDocumentService
     {
         private readonly IAfTestAppContextFactory _afTestAppContextFactory;
 
@@ -17,9 +17,9 @@ namespace AFTestApp.Services.Services
             _afTestAppContextFactory = afTestAppContextFactory;
         }
 
-        public DocumentViewModel GetNewDocument()
+        public DocumentDto GetNewDocument()
         {
-            var documentViewModel = new DocumentViewModel()
+            var documentViewModel = new DocumentDto()
             {
                 Date = DateTime.UtcNow,
                 DocumentStatus = DocumentStatus.Open,
@@ -28,14 +28,15 @@ namespace AFTestApp.Services.Services
             var doc = new Document()
             {
                 Date = documentViewModel.Date,
-                DocumentStatusId = (int) documentViewModel.DocumentStatus,
-                DocumentTypeId = (int) documentViewModel.DocumentType
+                DocumentStatusId = (int)documentViewModel.DocumentStatus,
+                DocumentTypeId = (int)documentViewModel.DocumentType
             };
             using (var context = _afTestAppContextFactory.CreateContext())
             {
                 context.Documents.Add(doc);
+                context.SaveChanges();
                 documentViewModel.DocumentId = doc.DocumentId;
-                documentViewModel.DocumentNumber =doc.DocumentId.GetDocumentNumber();
+                documentViewModel.DocumentNumber = doc.DocumentId.GetDocumentNumber();
                 doc.DocumentNumber = documentViewModel.DocumentNumber;
                 context.SaveChanges();
             }
@@ -43,8 +44,8 @@ namespace AFTestApp.Services.Services
             return documentViewModel;
         }
 
-        
-        public DocumentViewModel SubmitDocument(DocumentViewModel documentViewModel)
+
+        public DocumentDto SubmitDocument(DocumentDto documentDto)
         {
             using (var context = _afTestAppContextFactory.CreateContext())
             {
@@ -52,8 +53,8 @@ namespace AFTestApp.Services.Services
                 {
                     try
                     {
-                        CreatedDocumentProducts(documentViewModel, context);
-                        SubmitDocument(documentViewModel.DocumentId, context);
+                        CreatedDocumentProducts(documentDto, context);
+                        SubmitDocument(documentDto.DocumentId, context);
 
                         context.SaveChanges();
                         tran.Commit();
@@ -66,18 +67,19 @@ namespace AFTestApp.Services.Services
                 }
             }
 
-            return documentViewModel;
+            return documentDto;
         }
 
-        private static void CreatedDocumentProducts(DocumentViewModel documentViewModel, AfTestAppContext context)
+        private static void CreatedDocumentProducts(DocumentDto documentViewModel, AfTestAppContext context)
         {
-            var groupedProducts = documentViewModel.Products.GroupBy(x => x.ProductId).Select(x => new { Id = x.Key, Count = x.Count() });
-            foreach (var groupedProduct in groupedProducts)
+            foreach (var product in documentViewModel.Products)
             {
                 var docProduct = new DocumentProduct()
                 {
-                    ProductId = groupedProduct.Id,
-                    Count = groupedProduct.Count,
+                    Order = product.Order,
+                    ProductId = product.ProductId,
+                    Count = product.Count,
+                    DocumentId = documentViewModel.DocumentId
                 };
                 context.DocumentProduct.Add(docProduct);
             }

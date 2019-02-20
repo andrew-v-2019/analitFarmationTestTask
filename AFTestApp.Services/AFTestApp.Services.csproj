@@ -77,9 +77,9 @@
       <Project>{494DEF0E-5CB4-4767-8027-75A44EA5698B}</Project>
       <Name>AFTestApp.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AFTestApp.ViewModels\AFTestApp.ViewModels.csproj">
+    <ProjectReference Include="..\AFTestApp.ViewModels\AFTestApp.DtoModels.csproj">
       <Project>{E474E637-C9FD-4F30-A7E5-9F4951454B47}</Project>
-      <Name>AFTestApp.ViewModels</Name>
+      <Name>AFTestApp.DtoModels</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
