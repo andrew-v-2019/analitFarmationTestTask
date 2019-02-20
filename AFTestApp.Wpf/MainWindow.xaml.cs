@@ -1,9 +1,11 @@
-﻿using AFTestApp.Services.Interfaces;
+﻿using System;
+using AFTestApp.Services.Interfaces;
 using AFTestApp.Services.Services.Unity;
 using AFTestApp.ViewModels;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace AFTestApp.Wpf
 {
@@ -11,33 +13,62 @@ namespace AFTestApp.Wpf
     {
         private IProductService _productService;
         private IDocumentService _documentService;
-
         public List<ProductViewModel> Products { get; set; }
+        public ProductViewModel CurrentProduct { get; set; }
+        public DocumentViewModel CurrentDocument { get; set; }
 
-        public ProductViewModel Product { get; set; }
 
         public MainWindow()
         {
             Products = new List<ProductViewModel>();
             InitializeComponent();
-            ServiceInjector.ConfigureServices();
-            _productService = ServiceInjector.Retrieve<IProductService>();
-            _documentService = ServiceInjector.Retrieve<IDocumentService>();
+            InjectServices();
             DataContext = this;
-            //Products = _productService.GetProducts().Result;
-            
+            RefreshProducts();
+            CreateNewDocument();
+            SetAddProductButtonStatus();
         }
 
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void CreateNewDocument()
         {
-            productComboBox.IsEnabled = false;
-            _productService.GetProducts().ContinueWith(task =>
+            CurrentDocument= _documentService.GetNewDocument();
+        }
+
+        private void RefreshProducts()
+        {
+            Products = _productService.GetProducts();
+        }
+
+        private void SetAddProductButtonStatus()
+        {
+            if (CurrentProduct == null || ProductsCountTextBox.Text.Trim() == string.Empty)
             {
-                Products = task.Result;
-                productComboBox.IsEnabled = true;
-            },
-             TaskScheduler.FromCurrentSynchronizationContext());
+                AddProductButton.IsEnabled = false;
+            }
+            else
+            {
+                AddProductButton.IsEnabled = true;
+            }
+        }
+
+        private void InjectServices()
+        {
+            ServiceInjector.ConfigureServices();
+            _productService = ServiceInjector.Retrieve<IProductService>();
+            _documentService = ServiceInjector.Retrieve<IDocumentService>();
+        }
+
+        private void ProductsCountTextBox_FormatText(object sender, RoutedEventArgs e)
+        {
+            ProductsCountTextBox.FormatTextBoxForOnlyDigits();
+            SetAddProductButtonStatus();
+        }
+
+        private void ProductComboBox_SelectedChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CurrentProduct.Count = 1;
+            SetAddProductButtonStatus();
         }
     }
 }

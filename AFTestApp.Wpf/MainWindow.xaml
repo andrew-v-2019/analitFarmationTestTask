@@ -19,7 +19,7 @@
         </Grid>
         <Grid Grid.Row="1" Background="#2d6ac6">
         </Grid>
-        <Grid Grid.Row="2" Height="Auto" Margin="20 0 20 0">
+        <Grid Grid.Row="2" Height="Auto" Margin="20 0 20 10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -31,15 +31,16 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Margin="5 5 5 5" Grid.Column="0">Выберите наименование:</TextBlock>
             <ComboBox ItemsSource="{Binding Products}"
-                      SelectedItem="{Binding Product}"
+                      SelectedItem="{Binding CurrentProduct}"
                       DisplayMemberPath="Name"
-                      SelectedValuePath="ProductId" Margin="5 5 5 5" x:Name="productComboBox" Grid.Row="1" Grid.Column="0">
+                      SelectionChanged="ProductComboBox_SelectedChanged"
+                      SelectedValuePath="ProductId" Margin="5 5 5 5" x:Name="ProductComboBox" Grid.Row="1" Grid.Column="0">
                 
             </ComboBox>
             <TextBlock Grid.Row="0" Margin="5 5 5 5" Grid.Column="1">Укажите количество:</TextBlock>
-            <TextBox Margin="5 5 5 5" Grid.Row="1" Grid.Column="1"></TextBox>
+            <TextBox Name="ProductsCountTextBox" Text="{Binding Path=CurrentProduct.Count, Mode=TwoWay}" TextChanged="ProductsCountTextBox_FormatText" Margin="5 5 5 5" Grid.Row="1" Grid.Column="1"></TextBox>
             <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button  Click="Button_Click" Margin="5 5 5 5">
+                <Button Name="AddProductButton" Margin="5 5 5 5">
                     <TextBlock  Margin="2 2 2 2">Добавить товар</TextBlock>
                 </Button>
                 <Button  Margin="5 5 5 5">
@@ -48,6 +49,10 @@
             </StackPanel>
         </Grid>
         <Grid Grid.Row="3" Background="#2d6ac6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="207*"/>
+                <ColumnDefinition Width="364*"/>
+            </Grid.ColumnDefinitions>
         </Grid>
         <StatusBar Grid.Row="4" Background="#008ed5" Foreground="#FFFBFAFA">
             <StatusBar.ItemsPanel>
