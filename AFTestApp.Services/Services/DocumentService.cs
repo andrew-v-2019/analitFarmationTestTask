@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using AFTestApp.Data;
 using AFTestApp.Data.Entities;
@@ -68,7 +69,7 @@ namespace AFTestApp.Services.Services
             return documentDto;
         }
 
-        private static void CreatedDocumentProducts(DocumentDto documentDto, AfTestAppContext context)
+        public void CreatedDocumentProducts(DocumentDto documentDto, AfTestAppContext context)
         {
             foreach (var product in documentDto.Products)
             {
@@ -79,7 +80,7 @@ namespace AFTestApp.Services.Services
             }
         }
 
-        private static void SubmitDocument(DocumentDto documentDto, AfTestAppContext context)
+        public void SubmitDocument(DocumentDto documentDto, AfTestAppContext context)
         {
             var doc = Project(documentDto);
             doc.DocumentStatusId = (int)DocumentStatus.Submitted;

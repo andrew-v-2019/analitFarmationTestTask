@@ -4,8 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using AFTestApp.DtoModels;
-using AFTestApp.Services;
-using System;
 using AFTestApp.Extensions;
 
 namespace AFTestApp.Wpf.Models
@@ -164,6 +162,11 @@ namespace AFTestApp.Wpf.Models
             {
                 var productToAdd = Products.Where(x => x.ProductId == newProductId)
                     .Select(x => new ProductViewModel(x)).FirstOrDefault();
+                if (productToAdd == null)
+                {
+                    return;
+                }
+
                 productToAdd.Count = newProductCount;
                 CalculateProductSum(productToAdd);
                 SelectedProducts.Add(productToAdd);
@@ -189,14 +192,13 @@ namespace AFTestApp.Wpf.Models
 
         public DocumentDto ToDto()
         {
-            var documentDto = new DocumentDto()
+            var documentDto = new DocumentDto
             {
                 DocumentId = documentId,
                 DocumentNumber = DocumentNumber,
                 DocumentTypeId = DocumentTypeId,
+                Products = new List<ProductDto>(),
             };
-
-            documentDto.Products = new List<ProductDto>();
 
             var order = 1;
 

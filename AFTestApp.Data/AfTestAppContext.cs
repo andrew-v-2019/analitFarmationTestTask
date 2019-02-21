@@ -13,6 +13,11 @@ namespace AFTestApp.Data
         {
         }
 
+        public AfTestAppContext()
+        {
+
+        }
+
         public IDbSet<Product> Products { get; set; }
         public IDbSet<Document> Documents { get; set; }
         public IDbSet<DocumentProduct> DocumentProduct { get; set; }

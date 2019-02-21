@@ -138,6 +138,10 @@
     <Resource Include="icons\user.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AFTestApp.Extensions\AFTestApp.Extensions.csproj">
+      <Project>{6EF05651-942B-4897-8614-D85E2F2FC17B}</Project>
+      <Name>AFTestApp.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AFTestApp.Services\AFTestApp.Services.csproj">
       <Project>{6254CBAB-B355-4077-94F5-96D40E12DCDE}</Project>
       <Name>AFTestApp.Services</Name>

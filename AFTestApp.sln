@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFTestApp.Wpf", "AFTestApp.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFTestApp.Extensions", "AFTestApp.Extensions\AFTestApp.Extensions.csproj", "{6EF05651-942B-4897-8614-D85E2F2FC17B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFTestApp.Tests", "AFTestApp.Tests\AFTestApp.Tests.csproj", "{BD0CDCE3-78AA-40E9-9EEC-4ACB7E1BC29D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{6EF05651-942B-4897-8614-D85E2F2FC17B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EF05651-942B-4897-8614-D85E2F2FC17B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EF05651-942B-4897-8614-D85E2F2FC17B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD0CDCE3-78AA-40E9-9EEC-4ACB7E1BC29D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD0CDCE3-78AA-40E9-9EEC-4ACB7E1BC29D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD0CDCE3-78AA-40E9-9EEC-4ACB7E1BC29D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD0CDCE3-78AA-40E9-9EEC-4ACB7E1BC29D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
