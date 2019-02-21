@@ -3,14 +3,18 @@ using System.Data.Entity;
 using System.Data.SQLite;
 using System.Data.SQLite.EF6;
 using AFTestApp.Data.Entities;
+using NLog;
 
 namespace AFTestApp.Data
 {
     public sealed class AfTestAppContext : DbContext
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         public AfTestAppContext(SQLiteConnection sqLiteConnection)
             : base(sqLiteConnection, false)
         {
+           
         }
 
         public AfTestAppContext()
@@ -49,7 +53,7 @@ namespace AFTestApp.Data
             }
             catch (Exception ex)
             {
-               //_log.Error(ex);
+                Logger.Error(ex);
             }
         }
 

@@ -7,12 +7,15 @@ using AFTestApp.Services.Interfaces;
 using AFTestApp.ViewModels.Enums;
 using AFTestApp.DtoModels;
 using AFTestApp.Extensions;
+using AFTestApp.ViewModels;
+using NLog;
 
 namespace AFTestApp.Services.Services
 {
     public class DocumentService : IDocumentService
     {
         private readonly IAfTestAppContextFactory _afTestAppContextFactory;
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public DocumentService(IAfTestAppContextFactory afTestAppContextFactory)
         {
@@ -44,10 +47,16 @@ namespace AFTestApp.Services.Services
         }
 
 
-        public DocumentDto SubmitDocument(DocumentDto documentDto)
+        public SubmitResultDto SubmitDocument(DocumentDto documentDto)
         {
+            var result = new SubmitResultDto()
+            {
+                Document = documentDto,
+                Success = true,
+            };
             using (var context = _afTestAppContextFactory.CreateContext())
             {
+                result.TotalDocumentsCount = context.Documents.Count();
                 using (var tran = context.Database.BeginTransaction())
                 {
                     try
@@ -57,16 +66,18 @@ namespace AFTestApp.Services.Services
 
                         context.SaveChanges();
                         tran.Commit();
+                        result.TotalDocumentsCount++;
                     }
                     catch (Exception e)
                     {
                         tran.Rollback();
-                        throw;
+                        result.Success = false;
+                        result.Message = e.Message;
+                        Logger.Error(e);
                     }
                 }
             }
-
-            return documentDto;
+            return result;
         }
 
         public void CreatedDocumentProducts(DocumentDto documentDto, AfTestAppContext context)

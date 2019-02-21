@@ -3,7 +3,8 @@ using AFTestApp.Services.Services.Unity;
 using System.Windows;
 using System.Windows.Controls;
 using AFTestApp.Wpf.Models;
-using System;
+using AFTestApp.ViewModels;
+using NLog;
 
 namespace AFTestApp.Wpf
 {
@@ -13,6 +14,7 @@ namespace AFTestApp.Wpf
         private IDocumentService _documentService;
         public DocumentViewModel ViewModel { get; set; }
 
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public MainWindow()
         {
@@ -63,16 +65,26 @@ namespace AFTestApp.Wpf
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            var dto = ViewModel.ToDto();
+            var saveResult = _documentService.SubmitDocument(dto);
+            var newDocument = _documentService.GetNewDocument();
+            ViewModel.ResetDocument(newDocument);
+            ShowResult(saveResult);
+        }
+
+        private static void ShowResult(SubmitResultDto result)
+        {
+            var message = $"Документ {result.Document.DocumentNumber} сохранён.\r\n Количество документов в базе данных {result.TotalDocumentsCount}";
+            var messageBoxImage = MessageBoxImage.Information;
+            var title = "Успешно";
+            if (!result.Success)
             {
-                var dto = ViewModel.ToDto();
-                _documentService.SubmitDocument(dto);
-                MessageBox.Show($"Документ {dto.DocumentNumber} сохранён", "Успешно", 0, MessageBoxImage.Information);
+                message = "В ходе сохранения произошли ошибки";
+                title = "Ошибка";
+                messageBoxImage = MessageBoxImage.Error;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"В ходе сохранения произошли ошибки", "Ошибка", 0, MessageBoxImage.Error);
-            }
+            Logger.Info(message);
+            MessageBox.Show(message, title, 0, messageBoxImage);
         }
     }
 }

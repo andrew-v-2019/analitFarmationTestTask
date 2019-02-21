@@ -109,6 +109,7 @@ namespace AFTestApp.Wpf.Models
 
         public void ResetDocument(DocumentDto newDocument)
         {
+            SelectedProducts.Clear();
             documentId = newDocument.DocumentId;
             DocumentStatusId = newDocument.DocumentStatusId;
             DocumentTypeId = newDocument.DocumentTypeId;

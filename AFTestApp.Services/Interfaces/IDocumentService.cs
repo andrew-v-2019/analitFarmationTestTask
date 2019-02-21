@@ -1,10 +1,11 @@
 ﻿using AFTestApp.DtoModels;
+using AFTestApp.ViewModels;
 
 namespace AFTestApp.Services.Interfaces
 {
     public interface IDocumentService
     {
         DocumentDto GetNewDocument();
-        DocumentDto SubmitDocument(DocumentDto documentViewModel);
+        SubmitResultDto SubmitDocument(DocumentDto documentViewModel);
     }
 }
