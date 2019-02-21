@@ -45,7 +45,7 @@
             </StackPanel>
             <StackPanel Grid.Row="0" Grid.Column="1" Margin="10 10 10 10" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Foreground="#FFFBFAFA" Text="Цена: " FontSize="18"/>
-                <TextBlock Foreground="#FFFBFAFA" Text="{Binding Path=ViewProduct.Price}" FontSize="18"/>
+                <TextBlock Foreground="#FFFBFAFA" Text="{Binding Path=ViewProduct.Price, StringFormat=F2}" FontSize="18"/>
             </StackPanel>
             <StackPanel Grid.Row="0" Grid.Column="2" Margin="10 10 10 10" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Foreground="#FFFBFAFA" Text="Количество: " FontSize="18"/>
