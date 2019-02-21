@@ -19,7 +19,7 @@ namespace AFTestApp.Services.Services
         {
             using (var context = _afTestAppContextFactory.CreateContext())
             {
-                var products = context.Products.Select(x => new ProductDto()
+                var products = context.Products.Select(x => new ProductDto
                 {
                     Name = x.Name,
                     Code = x.Code,

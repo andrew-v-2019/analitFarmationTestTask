@@ -60,7 +60,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions.cs" />
     <Compile Include="Interfaces\IDocumentService.cs" />
     <Compile Include="Interfaces\IProductService.cs" />
     <Compile Include="Services\DocumentService.cs" />
@@ -76,6 +75,10 @@
     <ProjectReference Include="..\AFTestApp.Data\AFTestApp.Data.csproj">
       <Project>{494DEF0E-5CB4-4767-8027-75A44EA5698B}</Project>
       <Name>AFTestApp.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AFTestApp.Extensions\AFTestApp.Extensions.csproj">
+      <Project>{6EF05651-942B-4897-8614-D85E2F2FC17B}</Project>
+      <Name>AFTestApp.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\AFTestApp.ViewModels\AFTestApp.DtoModels.csproj">
       <Project>{E474E637-C9FD-4F30-A7E5-9F4951454B47}</Project>

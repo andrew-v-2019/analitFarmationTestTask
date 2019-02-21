@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using AFTestApp.DtoModels;
 using AFTestApp.Services;
 using System;
+using AFTestApp.Extensions;
 
 namespace AFTestApp.Wpf.Models
 {

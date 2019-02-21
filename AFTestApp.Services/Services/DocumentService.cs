@@ -5,6 +5,7 @@ using AFTestApp.Data.Entities;
 using AFTestApp.Services.Interfaces;
 using AFTestApp.ViewModels.Enums;
 using AFTestApp.DtoModels;
+using AFTestApp.Extensions;
 
 namespace AFTestApp.Services.Services
 {
@@ -17,31 +18,28 @@ namespace AFTestApp.Services.Services
             _afTestAppContextFactory = afTestAppContextFactory;
         }
 
-        public DocumentDto GetNewDocument()
+        private string GetNextDocumentNumber()
         {
-            var documentViewModel = new DocumentDto()
-            {
-                Date = DateTime.UtcNow,
-                DocumentStatus = DocumentStatus.Open,
-                DocumentType = DocumentType.Sale,
-            };
-            var doc = new Document()
-            {
-                Date = documentViewModel.Date,
-                DocumentStatusId = (int)documentViewModel.DocumentStatus,
-                DocumentTypeId = (int)documentViewModel.DocumentType
-            };
             using (var context = _afTestAppContextFactory.CreateContext())
             {
-                context.Documents.Add(doc);
-                context.SaveChanges();
-                documentViewModel.DocumentId = doc.DocumentId;
-                documentViewModel.DocumentNumber = doc.DocumentId.GetDocumentNumber();
-                doc.DocumentNumber = documentViewModel.DocumentNumber;
-                context.SaveChanges();
+                const int result = 1;
+                var lastDocument = context.Documents.OrderByDescending(x => x.DocumentId).FirstOrDefault();
+                return lastDocument == null ? result.GetDocumentNumber() : (lastDocument.DocumentId + 1).GetDocumentNumber();
             }
+        }
 
-            return documentViewModel;
+        public DocumentDto GetNewDocument()
+        {
+            var document = new Document()
+            {
+                Date = DateTime.UtcNow,
+                DocumentStatusId = (int)DocumentStatus.Open,
+                DocumentTypeId = (int)DocumentType.Sale,
+                DocumentNumber = GetNextDocumentNumber(),
+            };
+
+            var dto = Project(document);
+            return dto;
         }
 
 
@@ -53,8 +51,8 @@ namespace AFTestApp.Services.Services
                 {
                     try
                     {
+                        SubmitDocument(documentDto, context);
                         CreatedDocumentProducts(documentDto, context);
-                        SubmitDocument(documentDto.DocumentId, context);
 
                         context.SaveChanges();
                         tran.Commit();
@@ -70,31 +68,40 @@ namespace AFTestApp.Services.Services
             return documentDto;
         }
 
-        private static void CreatedDocumentProducts(DocumentDto documentViewModel, AfTestAppContext context)
+        private static void CreatedDocumentProducts(DocumentDto documentDto, AfTestAppContext context)
         {
-            foreach (var product in documentViewModel.Products)
+            foreach (var product in documentDto.Products)
             {
-                var docProduct = new DocumentProduct()
-                {
-                    Order = product.Order,
-                    ProductId = product.ProductId,
-                    Count = product.Count,
-                    DocumentId = documentViewModel.DocumentId
-                };
+                var docProduct = new DocumentProduct();
+                docProduct.MapFromObjectWithSameNames(product);
+                docProduct.DocumentId = documentDto.DocumentId;
                 context.DocumentProduct.Add(docProduct);
             }
         }
 
-        private static void SubmitDocument(int documentId, AfTestAppContext context)
+        private static void SubmitDocument(DocumentDto documentDto, AfTestAppContext context)
         {
-            var doc = context.Documents.FirstOrDefault(x => x.DocumentId == documentId);
-            if (doc != null)
-            {
-                doc.DocumentStatusId = (int)DocumentStatus.Submitted;
-            }
+            var doc = Project(documentDto);
+            doc.DocumentStatusId = (int)DocumentStatus.Submitted;
+            context.Documents.Add(doc);
+            context.SaveChanges();
+            documentDto.DocumentId = doc.DocumentId;
         }
 
+        private static DocumentDto Project(Document doc)
+        {
+            var documentDto = new DocumentDto();
+            documentDto.MapFromObjectWithSameNames(doc);
+            documentDto.DocumentStatus = (DocumentStatus)doc.DocumentStatusId;
+            documentDto.DocumentType = (DocumentType)doc.DocumentTypeId;
+            return documentDto;
+        }
 
-
+        private static Document Project(DocumentDto docDto)
+        {
+            var document = new Document();
+            document.MapFromObjectWithSameNames(docDto);
+            return document;
+        }
     }
 }
